@@ -31,6 +31,11 @@
         "server": "fakeip"
       },
       {
+        "domain_regex": "^(mtalk|mtalk4|mtalk-staging|mtalk-dev|alt[1-8]-mtalk)\\.google\\.com$",
+        "action": "route",
+        "server": "google"
+      },
+      {
         "query_type": "HTTPS",
         "action": "reject"
       },
@@ -96,6 +101,26 @@
         "outbound": "direct"
       },
       {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "domain_regex": "^(mtalk|mtalk4|mtalk-staging|mtalk-dev|alt[1-8]-mtalk)\\.google\\.com$"
+          },
+          {
+            "port": 5228
+          },
+          {
+            "port": 5229
+          },
+          {
+            "port": 5230
+          }
+        ],
+        "action": "route",
+        "outbound": "📮 GoogleFCM"
+      },
+      {
         "rule_set": "bilibili_domain",
         "action": "route",
         "outbound": "bilibili"
@@ -122,20 +147,6 @@
         "rule_set": "openai_domain",
         "action": "route",
         "outbound": "openai"
-      },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "domain_regex": "^(alt[1-8]-)?mtalk4?(-(staging|dev))?\\.google\\.com$"
-          },
-          {
-            "port": 5228
-          }
-        ],
-        "action": "route",
-        "outbound": "📮 GoogleFCM"
       },
       {
         "type": "logical",
@@ -326,6 +337,27 @@
       "default": "all-auto"
     },
     {
+      "tag": "📮 GoogleFCM",
+      "type": "selector",
+      "outbounds": [
+        "direct",
+        "proxy",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "us-auto",
+        "all",
+        "all-auto"
+      ],
+      "default": "direct"
+    },
+    {
       "tag": "google",
       "type": "selector",
       "outbounds": [
@@ -343,15 +375,6 @@
         "us-auto",
         "all",
         "all-auto"
-      ],
-      "default": "proxy"
-    },
-    {
-      "tag": "📮 GoogleFCM",
-      "type": "selector",
-      "outbounds": [
-        "proxy",
-        "direct"
       ],
       "default": "proxy"
     },
@@ -646,6 +669,29 @@
     {
       "tag": "direct",
       "type": "direct"
+    }
+  ],
+  "inbounds": [
+    {
+      "type": "tun",
+      "address": [
+        "172.19.0.0/30",
+        "fdfe:dcba:9876::0/126"
+      ],
+      "stack": "mixed",
+      "auto_route": true,
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 7890
+        }
+      }
+    },
+    {
+      "type": "mixed",
+      "listen": "127.0.0.1",
+      "listen_port": 7890
     }
   ],
   "experimental": {
