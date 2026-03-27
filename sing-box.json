@@ -101,24 +101,9 @@
         "outbound": "direct"
       },
       {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "domain_regex": "^(mtalk|mtalk4|mtalk-staging|mtalk-dev|alt[1-8]-mtalk)\\.google\\.com$"
-          },
-          {
-            "port": 5228
-          },
-          {
-            "port": 5229
-          },
-          {
-            "port": 5230
-          }
-        ],
+        "domain_regex": "^(mtalk|mtalk4|mtalk-staging|mtalk-dev|alt[1-8]-mtalk)\\.google\\.com$",
         "action": "route",
-        "outbound": "📮 GoogleFCM"
+        "outbound": "direct"
       },
       {
         "rule_set": "bilibili_domain",
@@ -335,27 +320,6 @@
         "direct"
       ],
       "default": "all-auto"
-    },
-    {
-      "tag": "📮 GoogleFCM",
-      "type": "selector",
-      "outbounds": [
-        "direct",
-        "proxy",
-        "hk",
-        "hk-auto",
-        "tw",
-        "tw-auto",
-        "jp",
-        "jp-auto",
-        "sg",
-        "sg-auto",
-        "us",
-        "us-auto",
-        "all",
-        "all-auto"
-      ],
-      "default": "direct"
     },
     {
       "tag": "google",
