@@ -156,6 +156,11 @@
         "outbound": "telegram"
       },
       {
+        "rule_set": "fcm_domain",
+        "action": "route",
+        "outbound": "fcm"
+      },
+      {
         "rule_set": [
           "google_ip",
           "google_domain"
@@ -238,6 +243,13 @@
         "download_detour": "direct"
       },
       {
+        "tag": "fcm_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/apksuu/kkkio/refs/heads/main/google_fcm.srs",
+        "download_detour": "direct"
+      },
+      {
         "tag": "netflix_ip",
         "type": "remote",
         "format": "binary",
@@ -313,6 +325,27 @@
     },
     {
       "tag": "google",
+      "type": "selector",
+      "outbounds": [
+        "proxy",
+        "direct",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "us-auto",
+        "all",
+        "all-auto"
+      ],
+      "default": "proxy"
+    },
+    {
+      "tag": "fcm",
       "type": "selector",
       "outbounds": [
         "proxy",
@@ -662,7 +695,7 @@
   },
   "log": {
     "disabled": false,
-    "level": "info",
+    "level": "warn",
     "timestamp": true
   }
 }
