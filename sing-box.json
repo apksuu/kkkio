@@ -31,11 +31,6 @@
         "server": "fakeip"
       },
       {
-        "domain_regex": "^(mtalk|mtalk4|mtalk-staging|mtalk-dev|alt[1-8]-mtalk)\\.google\\.com$",
-        "action": "route",
-        "server": "google"
-      },
-      {
         "query_type": "HTTPS",
         "action": "reject"
       },
@@ -97,11 +92,6 @@
       },
       {
         "clash_mode": "Direct",
-        "action": "route",
-        "outbound": "direct"
-      },
-      {
-        "domain_regex": "^(mtalk|mtalk4|mtalk-staging|mtalk-dev|alt[1-8]-mtalk)\\.google\\.com$",
         "action": "route",
         "outbound": "direct"
       },
